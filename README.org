@@ -1,0 +1,14 @@
+* Build Emacs for Mac using Nix (flakes)
+
+Usage:
+
+#+begin_src shell
+$ nix run github:hraban/emacs-macos-nix
+#+end_src
+
+To install to your system:
+
+#+begin_src shell
+$ nix build github:hraban/emacs-macos-nix
+$ mv result/Emacs.app /Applications
+#+end_src
