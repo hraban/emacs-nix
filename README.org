@@ -1,14 +1,54 @@
-* Build Emacs for Mac using Nix (flakes)
+* Emacs for Mac using Nix (flakes)
 
-Usage:
+** Usage
 
 #+begin_src shell
 $ nix run github:hraban/emacs-macos-nix
 #+end_src
 
+(The first run will take a long time while it builds Emacs from source.)
+
 To install to your system:
 
 #+begin_src shell
 $ nix build github:hraban/emacs-macos-nix
-$ mv result/Emacs.app /Applications
+$ cp -r result/Emacs.app /Applications
 #+end_src
+
+*** Update
+
+To update to latest Emacs, download this repository, run:
+
+#+begin_src shell
+$ nix flake update
+#+end_src
+
+... and run your desired command locally:
+
+#+begin_src shell
+$ nix run .
+# or
+$ nix build .
+#+end_src
+
+** Build philosophy
+
+I try to stick as closely as possible to native Emacs. No ports, no forks, just the master branch from the official git repo, with official installation instructions.
+
+Advantage: light configuration. Disadvantage: no fancy OS integrations like light / dark theme detection.
+
+** License
+
+Copyright © 2022  Hraban Luyat
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published
+by the Free Software Foundation, version 3 of the License.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
