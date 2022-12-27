@@ -49,9 +49,13 @@
             '';
             # On Emacs, make install is a necessary build step which includes
             # some runtime .el files in the final build. --prefix has no
-            # effect, so we must manually copy the files.
+            # effect, so we must manually copy the files. Additionally we must
+            # ensure the compiled elisp files are newer than their source
+            # counterparts, or load-prefer-newer will cause an infinite
+            # recursion. See "https://github.com/bbatsov/prelude/issues/1134".
             installPhase = ''
               make install
+              find nextstep/Emacs.app -name '*.elc' -exec touch {} +
               mkdir $out
               mv nextstep/Emacs.app $out/
             '';
