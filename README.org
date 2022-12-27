@@ -2,8 +2,6 @@
 
 Build Emacs from source on Mac using Nix. This is intended for people running Macos, using Nix as a package manager. Not for NixOS.
 
-First: [[https://nixos.org/download.html][install Nix]] itself. (See the [[https://nixos.wiki/wiki/Flakes#Enable_flakes][instructions to enable flake support]]: if you haven’t enabled them system-wide, add =--experimental-features 'nix-command flakes'= to every =nix= command below.)
-
 ** Usage
 
 #+begin_src shell
@@ -33,6 +31,16 @@ $ nix flake update
 $ nix run .
 # or
 $ nix build .
+#+end_src
+
+** Install Nix and enable Flakes
+
+First: [[https://nixos.org/download.html][install Nix]] itself.
+
+See the [[https://nixos.wiki/wiki/Flakes#Enable_flakes][instructions to enable flake support]]. If you haven’t enabled them system-wide (or don’t want to), replace every =$ nix ...= above with:
+
+#+begin_src shell
+$ nix --experimental-features 'nix-command flakes' ...
 #+end_src
 
 ** Build philosophy
