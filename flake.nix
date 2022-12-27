@@ -42,9 +42,23 @@
             # https://opensource.apple.com/source/CarbonHeaders/CarbonHeaders-18.1/AvailabilityMacros.h.auto.html
             CFLAGS = "-O3 -march=native -DMAC_OS_X_VERSION_MIN_REQUIRED=1260";
             configureFlags = [
-              "--enable-link-time-optimization"
               "--with-imagemagick"
               "--with-json"
+              "--with-png"
+              "--with-jpeg"
+              "--with-tiff"
+              "--with-gif"
+              "--with-rsvg"
+              "--with-sqlite3"
+              "--with-lcms"
+              "--with-libsystemd"
+              "--with-xml2"
+              "--with-tree-sitter"
+              "--with-harfbuzz"
+              "--with-libotf"
+              "--with-libgmp"
+
+              "--enable-link-time-optimization"
               "--with-modules"
               "--with-native-compilation"
               "--without-dbus"
@@ -80,10 +94,23 @@
               libgccjit
               ncurses
               texinfo
+              tree-sitter
+              # These seem like they’d be necessary, but for some reason the
+              # build doesn’t fail on my machine without them. I’ve included
+              # them anyway, but what gives? Is it really just a sandboxing
+              # issue? Other system libs (e.g. jansson) don’t get picked up
+              # during Nix build, so I’m not sure what makes these special. And
+              # even after specifying these, the actual ./configure output
+              # doesn’t mark them as enabled, even though config.log says they
+              # were. Strange...
+              harfbuzz
+              librsvg
+              libxml2
             ] ++ (with pkgs.darwin.apple_sdk.frameworks; [
               # This is the list in the official emacs derivation in nixpkgs
               # AppKit Carbon Cocoa IOKit OSAKit Quartz QuartzCore WebKit
               # ImageCaptureCore GSS ImageIO # may be optional
+              # But this seems to be the only one we need?
               Cocoa
             ]);
             meta = {
