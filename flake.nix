@@ -13,7 +13,7 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 {
-  description = "Demo lispPackagesLite app using flakes";
+  description = "The extensible, customizable GNU text editor";
   inputs = {
     flake-utils.url = "github:numtide/flake-utils";
     emacs = {
@@ -35,7 +35,7 @@
         {
           packages.default = pkgs.stdenv.mkDerivation rec {
             pname = "emacs";
-            version = "git";
+            version = "git"; # what is a neat way to handle this automatically?
             src = emacs;
             # I build this for myself so I don’t care about old systems. Just
             # set it to latest. This helps with appkit headers or something?
@@ -84,6 +84,15 @@
               # ImageCaptureCore GSS ImageIO # may be optional
               Cocoa
             ]);
+            meta = {
+              # :D
+              inherit (pkgs.emacs.meta)
+                homepage
+                license
+                description
+                unfree
+                longDescription;
+            };
             passthru.exePath = "/Emacs.app/Contents/MacOS/Emacs";
           };
           apps.default = mkApp {
