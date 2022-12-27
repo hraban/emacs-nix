@@ -46,6 +46,7 @@
               "--with-imagemagick"
               "--with-json"
               "--with-modules"
+              "--with-native-compilation"
               "--without-dbus"
             ];
             # Emacs’ build env supports configuring and building in one
@@ -64,7 +65,7 @@
             # "https://github.com/bbatsov/prelude/issues/1134".
             installPhase = ''
               make install
-              find nextstep/Emacs.app -name '*.elc' -exec touch {} +
+              find nextstep/Emacs.app -name '*.el[cn]' -exec touch {} +
               mkdir $out
               mv nextstep/Emacs.app $out/
             '';
@@ -76,6 +77,7 @@
               gnutls
               imagemagick
               jansson
+              libgccjit
               ncurses
               texinfo
             ] ++ (with pkgs.darwin.apple_sdk.frameworks; [
