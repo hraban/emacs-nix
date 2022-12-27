@@ -2,17 +2,13 @@
   description = "Demo lispPackagesLite app using flakes";
   inputs = {
     flake-utils.url = "github:numtide/flake-utils";
-    gitignore = {
-      inputs.nixpkgs.follows = "nixpkgs";
-      url = "github:hercules-ci/gitignore.nix";
-    };
     emacs = {
       url = "git://git.sv.gnu.org/emacs.git";
       flake = false;
     };
   };
   outputs = {
-    self, nixpkgs, gitignore, flake-utils, emacs
+    self, nixpkgs, flake-utils, emacs
   }:
     with flake-utils.lib;
     eachSystem [
@@ -21,7 +17,6 @@
     ] (system:
       let
         pkgs = import nixpkgs { inherit system; };
-        cleanSource = src: gitignore.lib.gitignoreSource (pkgs.lib.cleanSource src);
       in
         {
           packages.default = pkgs.stdenv.mkDerivation rec {
