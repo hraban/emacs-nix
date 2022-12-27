@@ -1,0 +1,21 @@
+diff --git c/pkgs/applications/editors/emacs/generic.nix w/pkgs/applications/editors/emacs/generic.nix
+index d6ce650fb8a..3f79dd1fbd6 100644
+--- c/pkgs/applications/editors/emacs/generic.nix
++++ w/pkgs/applications/editors/emacs/generic.nix
+@@ -6,7 +6,7 @@
+   , name ? "emacs-${version}${versionModifier}"
+   , patches ? _: [ ]
+   , macportVersion ? null
+-}:
++}@outer:
+ { stdenv, llvmPackages_6, lib, fetchurl, fetchpatch, substituteAll, ncurses, libXaw, libXpm
+ , Xaw3d, libXcursor,  pkg-config, gettext, libXft, dbus, libpng, libjpeg, giflib
+ , libtiff, librsvg, libwebp, gconf, libxml2, imagemagick, gnutls, libselinux
+@@ -33,6 +33,7 @@
+ , srcRepo ? true, autoreconfHook ? null, texinfo ? null
+ , siteStart ? ./site-start.el
+ , nativeComp ? true
++, version ? outer.version
+ , withAthena ? false
+ , withToolkitScrollBars ? true
+ , withPgtk ? false, gtk3 ? null
