@@ -60,7 +60,6 @@
 
               "--enable-link-time-optimization"
               "--with-modules"
-              "--with-native-compilation"
               "--without-dbus"
             ];
             # Emacs’ build env supports configuring and building in one
@@ -91,7 +90,6 @@
               gnutls
               imagemagick
               jansson
-              libgccjit
               ncurses
               texinfo
               tree-sitter
