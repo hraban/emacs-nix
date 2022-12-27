@@ -1,11 +1,11 @@
-* Emacs for Mac using Nix (flakes)
+* Latest Emacs using Nix (flakes)
 
-Build Emacs from source on Mac using Nix. This is intended for people running Macos, using Nix as a package manager. Not for NixOS.
+Build latest Emacs version from source using Nix.
 
 ** Usage
 
 #+begin_src shell
-$ nix run github:hraban/emacs-macos-nix
+$ nix run github:hraban/emacs-nix
 #+end_src
 
 (The first run will take a long time while it builds Emacs from source.)
@@ -13,8 +13,10 @@ $ nix run github:hraban/emacs-macos-nix
 To install to your system:
 
 #+begin_src shell
-$ nix build github:hraban/emacs-macos-nix
-$ cp -r result/Applications/Emacs.app /Applications
+# Make sure it actually builds before we go thrashing /Applications
+if nix build --no-link github:hraban/emacs-nix; then
+    ln -s "$(nix build --no-link --print-out-paths github:hraban/emacs-nix)/Applications/Emacs.app" /Applications/
+fi
 #+end_src
 
 *** Update
@@ -35,7 +37,7 @@ $ nix build .
 
 ** Why use this?
 
-This reuses the nixpkgs configuration for Emacs, but applies it to the latest source. If you’re fine with an older Emacs, just use =nix-env -i emacs=.
+Only if you want to run the latest Emacs version from source. If you’re fine with an older Emacs, just use =nix-env -i emacs=.
 
 ** Install Nix and enable Flakes
 
