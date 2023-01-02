@@ -14,7 +14,7 @@ To install to your system:
 
 #+begin_src shell
 $ nix build github:hraban/emacs-macos-nix
-$ cp -r result/Emacs.app /Applications
+$ cp -r result/Applications/Emacs.app /Applications
 #+end_src
 
 *** Update
@@ -33,6 +33,10 @@ $ nix run .
 $ nix build .
 #+end_src
 
+** Why use this?
+
+This reuses the nixpkgs configuration for Emacs, but applies it to the latest source. If you’re fine with an older Emacs, just use =nix-env -i emacs=.
+
 ** Install Nix and enable Flakes
 
 First: [[https://nixos.org/download.html][install Nix]] itself.
@@ -42,12 +46,6 @@ See the [[https://nixos.wiki/wiki/Flakes#Enable_flakes][instructions to enable f
 #+begin_src shell
 $ nix --experimental-features 'nix-command flakes' ...
 #+end_src
-
-** Build philosophy
-
-I try to stick as closely as possible to native Emacs. No ports, no forks, just the master branch from the official git repo, with official installation instructions.
-
-Advantage: light configuration. Disadvantage: no fancy OS integrations like light / dark theme detection.
 
 ** License
 
