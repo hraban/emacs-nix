@@ -10,15 +10,6 @@ $ nix run github:hraban/emacs-nix
 
 (The first run will take a long time while it builds Emacs from source.)
 
-To install to your system:
-
-#+begin_src shell
-# Make sure it actually builds before we go thrashing /Applications
-if nix build --no-link github:hraban/emacs-nix; then
-    ln -s "$(nix build --no-link --print-out-paths github:hraban/emacs-nix)/Applications/Emacs.app" /Applications/
-fi
-#+end_src
-
 *** Update
 
 To update to latest Emacs, download this repository, run:
@@ -33,6 +24,31 @@ $ nix flake update
 $ nix run .
 # or
 $ nix build .
+#+end_src
+
+*** To install to your system (Mac)
+
+#+begin_src shell
+cp -r --preserve=timestamps result/Emacs.app /Applications/
+#+end_src
+
+*** Force build using nixpkgs (Mac only)
+
+On Linux this flake will take the build instructions from nixpkgs and reuse that with the latest Emacs source from Git. On Mac, this solution produces suboptimal results, so I’ve changed it to a manual source build derivation. If you want to force the nixpkgs build on Mac, use this instead:
+
+#+begin_src shell
+$ nix run github:hraban/emacs-nix#from-nix
+#+end_src
+
+And substitute as appropriate in other commands.
+
+Installation of the nixpkgs build doesn’t support =cp -r= of the resulting app bundle, so you must use:
+
+#+begin_src shell
+# Make sure it actually builds before we go thrashing /Applications
+if nix build --no-link github:hraban/emacs-nix#from-nix; then
+    ln -s "$(nix build --no-link --print-out-paths github:hraban/emacs-nix#from-nix)/Applications/Emacs.app" /Applications/
+fi
 #+end_src
 
 ** Why use this?
@@ -51,7 +67,7 @@ $ nix --experimental-features 'nix-command flakes' ...
 
 ** License
 
-Copyright © 2022  Hraban Luyat
+Copyright © 2022, 2023  Hraban Luyat
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published
