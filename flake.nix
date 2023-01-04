@@ -40,7 +40,7 @@
           # wrong patch will be applied. To fix that, we have to patch nixpkgs
           # itself, re-import that, and finally override the version (and the src
           # attr).
-          orig-pkgs = import nixpkgs { inherit system; };
+          orig-pkgs = nixpkgs.legacyPackages.${system};
           patched-nixpkgs-src = orig-pkgs.applyPatches {
             name = "nixpkgs-emacs-overridable-version";
             src = nixpkgs;
