@@ -1,13 +1,36 @@
 {
   "nodes": {
+    "community-overlay": {
+      "inputs": {
+        "flake-utils": [
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1673892843,
+        "narHash": "sha256-c5YlWiJLvh6oS0ZpvhMiuo4N8zRw6PjPrzxTXvA0zuc=",
+        "owner": "nix-community",
+        "repo": "emacs-overlay",
+        "rev": "f3f76b7ba1359b070df55ae2c80c18d662fbd71f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "emacs-overlay",
+        "type": "github"
+      }
+    },
     "emacs": {
       "flake": false,
       "locked": {
-        "lastModified": 1672810213,
-        "narHash": "sha256-31Rq7Mq9ki85jReOTbuK460RVxHP0kfi5F0NJXrILrU=",
+        "lastModified": 1673894551,
+        "narHash": "sha256-7SlZj4czwibP21NiuaU5T/tzZxUEgFgq1KD4PSQAEnM=",
         "ref": "refs/heads/master",
-        "rev": "1ddd31bf9843c0453af92a09f98935cfcbb4e250",
-        "revCount": 164336,
+        "rev": "bcaa63ac506dc070b29db13326801ff978e8b00d",
+        "revCount": 164535,
         "type": "git",
         "url": "git://git.sv.gnu.org/emacs.git"
       },
@@ -33,11 +56,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1672756850,
-        "narHash": "sha256-Smbq3+fitwA13qsTMeaaurv09/KVbZfW7m7lINwzDGA=",
+        "lastModified": 1673606088,
+        "narHash": "sha256-wdYD41UwNwPhTdMaG0AIe7fE1bAdyHe6bB4HLUqUvck=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "298add347c2bbce14020fcb54051f517c391196b",
+        "rev": "37b97ae3dd714de9a17923d004a2c5b5543dfa6d",
         "type": "github"
       },
       "original": {
@@ -47,6 +70,7 @@
     },
     "root": {
       "inputs": {
+        "community-overlay": "community-overlay",
         "emacs": "emacs",
         "flake-utils": "flake-utils",
         "nixpkgs": "nixpkgs"

@@ -2,6 +2,8 @@
 
 Build latest Emacs version from source using Nix.
 
+This has become my playground for trying various builds of Emacs on Mac from a single easily managable location. Try it locally and see what works for you.
+
 ** Usage
 
 #+begin_src shell
@@ -10,7 +12,61 @@ $ nix run github:hraban/emacs-nix
 
 (The first run will take a long time while it builds Emacs from source.)
 
-*** Update
+There are three different builds offered by this flake:
+
+- =from-src= (Mac only, default)
+- =mac-port= (Mac only)
+- =from-nixpkgs= (default on other systems)
+
+*** =from-nixpkgs=
+
+This reuses the derivation from nixpkgs (which is quite complex and full of
+special cases), and uses that to build Emacs from its latest git master, instead
+of from the version pinned in nixpkgs.
+
+This is the default on non-Mac systems. The only reason to specify this explicitly, is because you’re on Mac, and you want to see what nixpkgs Mac looks like on Mac with the latest version of Mac:
+
+#+begin_src shell
+$ nix run github:hraban/emacs-nix#from-nixpkgs
+#+end_src
+
+Installation of the nixpkgs build doesn’t support =cp -r= of the resulting app bundle, so you must use:
+
+#+begin_src shell
+# Make sure it actually builds before we go thrashing /Applications
+if nix build --no-link github:hraban/emacs-nix#from-nixpkgs; then
+    ln -s "$(nix build --no-link --print-out-paths github:hraban/emacs-nix#from-nixpkgs)/Applications/Emacs.app" /Applications/
+fi
+#+end_src
+
+This is suboptimal, to put it mildly. There are many reasons to dislike this solution (which is why I added the other builds, to begin with).
+
+*** =from-src=
+
+This is a manual derivation which just fetches latest git and compiles it with
+no patches or special sauce or anything. It uses some mac-specific compiler flags, so I’ve only made this package available on Mac.
+
+Since this is the default on Mac, and it’s not available on any other system, there should never be a need to explicitly specify this package.
+
+To install this system-wide on Mac:
+
+#+begin_src shell
+cp -r --preserve=timestamps result/Emacs.app /Applications/
+#+end_src
+
+*** =mac-port=
+
+The [[https://nixos.wiki/wiki/Emacs][Nix wiki has a page on Emacs]], with a chapter on building a version using a Mac community overlay with patches from [[https://github.com/d12frosted/homebrew-emacs-plus/][emacs-plus]]. I’ve put it it in a derivation in this flake:
+
+#+begin_src shell
+$ nix run github:hraban/emacs-nix#mac-port
+#+end_src
+
+It still flickers.
+
+The desperate search continues for a reliable Emacs build on Mac.
+
+** Update
 
 To update to latest Emacs, download this repository, run:
 
@@ -26,30 +82,7 @@ $ nix run .
 $ nix build .
 #+end_src
 
-*** To install to your system (Mac)
-
-#+begin_src shell
-cp -r --preserve=timestamps result/Emacs.app /Applications/
-#+end_src
-
-*** Force build using nixpkgs (Mac only)
-
-On Linux this flake will take the build instructions from nixpkgs and reuse that with the latest Emacs source from Git. On Mac, this solution produces suboptimal results, so I’ve changed it to a manual source build derivation. If you want to force the nixpkgs build on Mac, use this instead:
-
-#+begin_src shell
-$ nix run github:hraban/emacs-nix#from-nix
-#+end_src
-
-And substitute as appropriate in other commands.
-
-Installation of the nixpkgs build doesn’t support =cp -r= of the resulting app bundle, so you must use:
-
-#+begin_src shell
-# Make sure it actually builds before we go thrashing /Applications
-if nix build --no-link github:hraban/emacs-nix#from-nix; then
-    ln -s "$(nix build --no-link --print-out-paths github:hraban/emacs-nix#from-nix)/Applications/Emacs.app" /Applications/
-fi
-#+end_src
+Optionally with any specific package of your choice.
 
 ** Why use this?
 
