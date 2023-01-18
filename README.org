@@ -14,19 +14,21 @@ $ nix run github:hraban/emacs-nix
 
 There are three different builds offered by this flake:
 
-- =from-src= (Mac only, default)
-- =mac-port= (Mac only)
-- =from-nixpkgs= (default on other systems)
+- =github:hraban/emacs-nix#from-src= (Mac only, default)
+- =github:hraban/emacs-nix#mac-port= (Mac only)
+- =github:hraban/emacs-nix#from-nixpkgs= (default on other systems)
 
-*** =from-nixpkgs=
+*** =github:hraban/emacs-nix#from-nixpkgs=
 
 This reuses [[https://github.com/NixOS/nixpkgs/blob/master/pkgs/applications/editors/emacs/generic.nix][the Emacs derivation from nixpkgs]] (which is quite complex and full of special cases), and uses that to build Emacs from its latest git master, instead of from the version pinned in nixpkgs.
 
-This is the default on non-Mac systems. The only reason to specify this explicitly, is because you’re on Mac, and you want to see what nixpkgs Mac looks like on Mac with the latest version of Mac:
+This is the default on non-Mac systems. The only reason to specify this package explicitly, is because you’re on Mac, and you want to see what nixpkgs Emacs looks like on Mac with the latest version of Mac:
 
 #+begin_src shell
 $ nix run github:hraban/emacs-nix#from-nixpkgs
 #+end_src
+
+On any other (non-Mac) system, you won’t need to specify this, as it’s default.
 
 Installation of the nixpkgs build doesn’t support =cp -r= of the resulting app bundle, so you must use:
 
@@ -37,12 +39,11 @@ if nix build --no-link github:hraban/emacs-nix#from-nixpkgs; then
 fi
 #+end_src
 
-This is suboptimal, to put it mildly. There are many reasons to dislike this solution (which is why I added the other builds, to begin with).
+I’ll gladly believe this works very well on Linux. On Mac though, this is suboptimal. To put it mildly. There are many reasons to dislike this solution (which is why I added the other builds, to begin with).
 
-*** =from-src=
+*** =github:hraban/emacs-nix#from-src=
 
-This is a manual derivation which just fetches latest git and compiles it with
-no patches or special sauce or anything. It uses some mac-specific compiler flags, so I’ve only made this package available on Mac.
+This is a manual derivation which just fetches latest git and compiles it with no patches or special sauce or anything. It uses some mac-specific compiler flags, so I’ve only made this package available on Mac.
 
 Since this is the default on Mac, and it’s not available on any other system, there should never be a need to explicitly specify this package.
 
@@ -52,7 +53,7 @@ To install this system-wide on Mac:
 cp -r --preserve=timestamps result/Emacs.app /Applications/
 #+end_src
 
-*** =mac-port=
+*** =github:hraban/emacs-nix#mac-port=
 
 The [[https://nixos.wiki/wiki/Emacs][Nix wiki has a page on Emacs]], with a chapter on building a version using a Mac community overlay with patches from [[https://github.com/d12frosted/homebrew-emacs-plus/][emacs-plus]]. I’ve put it it in a derivation in this flake:
 
