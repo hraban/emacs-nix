@@ -20,9 +20,7 @@ There are three different builds offered by this flake:
 
 *** =from-nixpkgs=
 
-This reuses the derivation from nixpkgs (which is quite complex and full of
-special cases), and uses that to build Emacs from its latest git master, instead
-of from the version pinned in nixpkgs.
+This reuses [[https://github.com/NixOS/nixpkgs/blob/master/pkgs/applications/editors/emacs/generic.nix][the Emacs derivation from nixpkgs]] (which is quite complex and full of special cases), and uses that to build Emacs from its latest git master, instead of from the version pinned in nixpkgs.
 
 This is the default on non-Mac systems. The only reason to specify this explicitly, is because you’re on Mac, and you want to see what nixpkgs Mac looks like on Mac with the latest version of Mac:
 
