@@ -10,11 +10,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1675937476,
-        "narHash": "sha256-DPd4/LjcaVouSTbLSnUa2oig+teH1bFGOvBIDw2MESA=",
+        "lastModified": 1676226118,
+        "narHash": "sha256-Iy7rsdxN94XK9ifJJEPwlCHvEYTtAyhsXDsmst6aGJ4=",
         "owner": "nix-community",
         "repo": "emacs-overlay",
-        "rev": "b70f136e1c59d3733684d9bd9893d9153f810be3",
+        "rev": "558a102c165bdf22782cd8c5db2e0fb9578ddc0e",
         "type": "github"
       },
       "original": {
@@ -26,11 +26,11 @@
     "emacs": {
       "flake": false,
       "locked": {
-        "lastModified": 1675920612,
-        "narHash": "sha256-Kh6BBw3LAIWRfIIR+USQOt95xJ9Wc1zSPHXQESXVW8Y=",
+        "lastModified": 1676229730,
+        "narHash": "sha256-9Cdd26+PnLbmDkHqmTjbr2+CgbFCnl1r5aM4vnaAisQ=",
         "ref": "refs/heads/master",
-        "rev": "1518fc5d7c5bedbbe35053696c7ec06020c81b05",
-        "revCount": 164902,
+        "rev": "e0b60120a1c3433fe332bff56b5b7483b0424d5c",
+        "revCount": 164937,
         "type": "git",
         "url": "git://git.sv.gnu.org/emacs.git"
       },
