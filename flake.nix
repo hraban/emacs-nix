@@ -15,6 +15,7 @@
 {
   description = "The extensible, customizable GNU text editor";
   inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs";
     flake-utils.url = "github:numtide/flake-utils";
     emacs = {
       url = "git://git.sv.gnu.org/emacs.git";
@@ -41,24 +42,13 @@
     in
       eachDefaultSystem (system:
         let
-          # nixpkgs has an extensively tested derivation for emacs, with one minor
-          # problem: the version isn’t overridable, and a patch is applied to the
-          # src depending on the version, meaning if you override the src the
-          # wrong patch will be applied. To fix that, we have to patch nixpkgs
-          # itself, re-import that, and finally override the version (and the src
-          # attr).
+          # nixpkgs has an extensively tested derivation for emacs.
           orig-pkgs = nixpkgs.legacyPackages.${system};
           # I /think/ there is a better way?
           ov-pkgs = import nixpkgs {
             inherit system;
             overlays = [ community-overlay.overlay ];
           };
-          patched-nixpkgs-src = orig-pkgs.applyPatches {
-            name = "nixpkgs-emacs-overridable-version";
-            src = nixpkgs;
-            patches = [ ./nixpkgs-emacs-overridable-version.patch ];
-          };
-          patched-pkgs = import patched-nixpkgs-src { inherit system; };
           all = {
             # The version is passed to the function that constructs this
             # derivation, and it is /that/ version which is used to determine
@@ -67,9 +57,8 @@
             # the derivation. That won’t influence the choice of patches, which
             # will cause a patch fail (see the emacs derivation in nixpkgs).
             packages = rec {
-              from-nixpkgs = (patched-pkgs.emacs.override ({
+              from-nixpkgs = orig-pkgs.emacs.overrideAttrs (_: {
                 version = "30.0-git";
-              })).overrideAttrs (_: {
                 src = emacs;
               });
               default = from-nixpkgs;
